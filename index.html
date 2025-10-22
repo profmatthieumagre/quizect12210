@@ -15,58 +15,57 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
         }
 
-        .quiz-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        .container {
             max-width: 800px;
-            width: 100%;
-            padding: 40px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
 
-        h1 {
-            color: #333;
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
             text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
             margin-bottom: 10px;
-            font-size: 2em;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
         }
 
         .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 30px;
+            background: rgba(255,255,255,0.3);
+            height: 10px;
+            border-radius: 5px;
             overflow: hidden;
+            margin-top: 20px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: white;
+            border-radius: 5px;
             width: 0%;
             transition: width 0.3s ease;
         }
 
-        .question-container {
-            display: none;
+        .quiz-content {
+            padding: 40px;
         }
 
-        .question-container.active {
-            display: block;
+        .question {
+            display: none;
             animation: fadeIn 0.5s;
+        }
+
+        .question.active {
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -77,92 +76,100 @@
         .question-number {
             color: #667eea;
             font-weight: bold;
+            font-size: 1.2em;
             margin-bottom: 10px;
         }
 
         .question-text {
             font-size: 1.3em;
+            margin-bottom: 30px;
             color: #333;
-            margin-bottom: 25px;
             line-height: 1.5;
         }
 
         .options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
 
         .option {
-            background: #f8f9fa;
+            padding: 20px;
+            background: #f7f7f7;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
-            padding: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1.05em;
+            font-size: 1.1em;
         }
 
         .option:hover {
-            background: #e8e9ff;
+            background: #f0f0f0;
             border-color: #667eea;
             transform: translateX(5px);
         }
 
         .option.selected {
-            background: #667eea;
-            color: white;
+            background: #e8eaf6;
             border-color: #667eea;
         }
 
         .option.correct {
-            background: #10b981;
-            color: white;
-            border-color: #10b981;
+            background: #d4edda;
+            border-color: #28a745;
+            animation: pulse 0.5s;
         }
 
         .option.incorrect {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
+            background: #f8d7da;
+            border-color: #dc3545;
+            animation: shake 0.5s;
         }
 
-        .option:disabled {
-            cursor: not-allowed;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        .btn-container {
-            margin-top: 30px;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .controls {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
         }
 
         .btn {
+            padding: 15px 30px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
+            border-radius: 10px;
             font-size: 1.1em;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: bold;
+            flex: 1;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.4);
         }
 
         .btn:disabled {
-            background: #ccc;
+            opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
 
         .results {
             display: none;
             text-align: center;
+            padding: 40px;
         }
 
         .results.active {
@@ -170,334 +177,481 @@
             animation: fadeIn 0.5s;
         }
 
-        .score-display {
-            font-size: 4em;
+        .score {
+            font-size: 3em;
             color: #667eea;
-            font-weight: bold;
-            margin: 30px 0;
-        }
-
-        .score-message {
-            font-size: 1.5em;
-            color: #333;
             margin-bottom: 20px;
         }
 
-        .score-details {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+        .message {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: #333;
         }
 
-        .score-details p {
-            font-size: 1.1em;
-            margin: 10px 0;
-            color: #555;
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
         }
 
-        .restart-btn {
-            margin-top: 30px;
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
         }
 
         .feedback {
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 15px;
-            border-radius: 8px;
-            font-size: 1em;
+            border-radius: 10px;
             display: none;
         }
 
         .feedback.show {
             display: block;
-            animation: fadeIn 0.3s;
+            animation: fadeIn 0.5s;
         }
 
         .feedback.correct {
-            background: #d1fae5;
-            color: #065f46;
-            border-left: 4px solid #10b981;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
         .feedback.incorrect {
-            background: #fee2e2;
-            color: #991b1b;
-            border-left: 4px solid #ef4444;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h1>🏛️ Quiz - Courants Politiques</h1>
-        <p class="subtitle">Testez vos connaissances sur les systèmes politiques anglo-saxons</p>
+    <div class="container">
+        <div class="header">
+            <h1>Quiz - Courants Politiques</h1>
+            <p>Testez vos connaissances sur les courants politiques contemporains</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
         
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressBar"></div>
+        <div class="quiz-content" id="quizContent">
+            <!-- Questions seront insérées ici par JavaScript -->
         </div>
-
-        <div id="quizContent">
-            <!-- Questions will be inserted here -->
-        </div>
-
+        
         <div class="results" id="results">
-            <h2>🎉 Quiz terminé !</h2>
-            <div class="score-display" id="scoreDisplay"></div>
-            <div class="score-message" id="scoreMessage"></div>
-            <div class="score-details" id="scoreDetails"></div>
-            <button class="btn restart-btn" onclick="restartQuiz()">🔄 Recommencer le quiz</button>
+            <div class="score" id="finalScore">0/50</div>
+            <div class="message" id="finalMessage"></div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="correctCount">0</div>
+                    <div class="stat-label">Bonnes réponses</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="incorrectCount">0</div>
+                    <div class="stat-label">Mauvaises réponses</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="percentScore">0%</div>
+                    <div class="stat-label">Pourcentage</div>
+                </div>
+            </div>
+            <button class="btn" onclick="restartQuiz()">Recommencer le Quiz</button>
         </div>
     </div>
 
     <script>
         const questions = [
             {
-                question: "Quelle doctrine politique prône la défense de la souveraineté nationale contre les contraintes supranationales ?",
-                options: ["Le mondialisme", "Le souverainisme", "Le progressisme", "Le libéralisme"],
-                correct: 1,
-                explanation: "Le souverainisme défend la souveraineté nationale, comme illustré par le Brexit."
+                question: "Quelle doctrine politique prône la défense de la souveraineté nationale et le rejet des contraintes supranationales ?",
+                options: ["Libéralisme", "Souverainisme", "Progressisme", "Socialisme"],
+                correct: 1
             },
             {
-                question: "Quel slogan emblématique est associé au mouvement souverainiste britannique lors du Brexit ?",
-                options: ["America First", "Take Back Control", "Yes We Can", "Make Britain Great Again"],
-                correct: 1,
-                explanation: "'Take Back Control' était le slogan phare de la campagne pour le Brexit."
+                question: "Quel événement est un exemple concret du souverainisme ?",
+                options: ["Le New Deal", "Le Brexit", "La création du NHS", "Les accords de libre-échange"],
+                correct: 1
             },
             {
-                question: "Quelles sont des exemples de politiques de gauche aux États-Unis ?",
-                options: [
-                    "Baisse d'impôts et privatisations",
-                    "Medicare for All et Green New Deal",
-                    "Politiques d'austérité",
-                    "Déréglementation économique"
-                ],
-                correct: 1,
-                explanation: "Medicare for All et le Green New Deal sont des propositions progressistes de gauche."
+                question: "Les politiques de gauche favorisent généralement :",
+                options: ["La réduction des impôts", "La privatisation", "La redistribution des richesses", "La limitation des services publics"],
+                correct: 2
             },
             {
-                question: "Quel est le principal parti de droite au Royaume-Uni ?",
-                options: ["Labour", "Liberal Democrats", "Conservateurs (Tories)", "SNP"],
-                correct: 2,
-                explanation: "Les Conservateurs (Tories) sont le principal parti de droite britannique."
+                question: "Quel est un exemple de politique de gauche aux États-Unis ?",
+                options: ["America First", "Medicare for All", "Les réformes fiscales de Trump", "Les politiques de Reagan"],
+                correct: 1
             },
             {
-                question: "Qui a créé le NHS (système de santé public britannique) ?",
-                options: ["Margaret Thatcher", "Tony Blair", "Le Parti travailliste", "Winston Churchill"],
-                correct: 2,
-                explanation: "Le Parti travailliste a créé le NHS après la Seconde Guerre mondiale."
+                question: "La mondialisation implique l'intégration à l'échelle mondiale de :",
+                options: ["Uniquement l'économie", "L'économie et la politique seulement", "L'économie, la politique et la culture", "Uniquement la culture"],
+                correct: 2
             },
             {
-                question: "Qu'est-ce que le populisme ?",
-                options: [
-                    "Une doctrine favorisant la monarchie",
-                    "Une idéologie défendant le 'peuple' contre l''élite'",
-                    "Un système économique planifié",
-                    "Une politique de libre-échange"
-                ],
-                correct: 1,
-                explanation: "Le populisme prétend défendre le 'peuple' contre une 'élite' perçue comme corrompue."
+                question: "Quelle organisation est un exemple d'institution de la mondialisation ?",
+                options: ["Le NHS", "L'OMC", "Le Parti républicain", "Le Labour Party"],
+                correct: 1
             },
             {
-                question: "Quel président américain est associé au New Deal ?",
-                options: ["Barack Obama", "Joe Biden", "Franklin D. Roosevelt", "John F. Kennedy"],
-                correct: 2,
-                explanation: "Franklin D. Roosevelt a mis en place le New Deal dans les années 1930."
+                question: "Le nationalisme privilégie :",
+                options: ["Les intérêts internationaux", "Les intérêts nationaux", "La coopération supranationale", "L'abolition des frontières"],
+                correct: 1
             },
             {
-                question: "Quelle idéologie prône la liberté individuelle maximale et la réduction de l'intervention étatique ?",
-                options: ["Le socialisme", "Le libertarianisme", "Le conservatisme", "Le progressisme"],
-                correct: 1,
-                explanation: "Le libertarianisme défend la liberté individuelle maximale et un État minimal."
+                question: "Le mouvement 'America First' est associé à quelle idéologie ?",
+                options: ["Progressisme", "Socialisme", "Nationalisme", "Libertarianisme"],
+                correct: 2
             },
             {
-                question: "Les politiques de Reagan et Thatcher sont associées à quel courant ?",
-                options: ["Le socialisme", "Le libéralisme économique", "Le communisme", "Le populisme"],
-                correct: 1,
-                explanation: "Reagan et Thatcher ont appliqué des politiques de libéralisme économique (libre marché)."
+                question: "Quel parti politique britannique est historiquement lié aux syndicats ?",
+                options: ["Les Conservateurs", "Les Travaillistes", "Les Libéraux-Démocrates", "UKIP"],
+                correct: 1
             },
             {
-                question: "Qui est Alexandria Ocasio-Cortez ?",
-                options: [
-                    "Une figure du conservatisme américain",
-                    "Une figure du progressisme américain",
-                    "Une candidate républicaine",
-                    "Une militante libertarienne"
-                ],
-                correct: 1,
-                explanation: "AOC est une figure majeure du progressisme américain, notamment avec le Green New Deal."
+                question: "Margaret Thatcher appartenait à quel parti politique ?",
+                options: ["Labour", "Conservateurs", "Libéraux-Démocrates", "Green Party"],
+                correct: 1
             },
             {
-                question: "Qu'est-ce que l'extrémisme politique ?",
-                options: [
-                    "Une politique centriste modérée",
-                    "L'adhésion à des idées radicales et intransigeantes",
-                    "Un système démocratique renforcé",
-                    "Une politique de compromis"
-                ],
-                correct: 1,
-                explanation: "L'extrémisme désigne des idées radicales, souvent en opposition aux valeurs démocratiques."
+                question: "Le populisme prétend défendre :",
+                options: ["Les élites", "Le peuple contre les élites", "Uniquement les entreprises", "Les institutions internationales"],
+                correct: 1
             },
             {
-                question: "Quel est l'objectif principal du socialisme ?",
-                options: [
-                    "Réduire les impôts sur les entreprises",
-                    "Privatiser les services publics",
-                    "Réduire les inégalités par la redistribution",
-                    "Limiter l'intervention de l'État"
-                ],
-                correct: 2,
-                explanation: "Le socialisme vise à réduire les inégalités sociales par la redistribution des richesses."
+                question: "Qui parmi ces personnalités est associé au populisme ?",
+                options: ["Tony Blair", "Barack Obama", "Marine Le Pen", "Angela Merkel"],
+                correct: 2
             },
             {
-                question: "Quels présidents américains sont associés au Parti républicain ?",
-                options: [
-                    "Barack Obama et Joe Biden",
-                    "Donald Trump et Ronald Reagan",
-                    "Bill Clinton et Jimmy Carter",
-                    "Franklin Roosevelt et John F. Kennedy"
-                ],
-                correct: 1,
-                explanation: "Trump et Reagan sont des figures emblématiques du Parti républicain."
+                question: "Le Parti démocrate américain est généralement associé à :",
+                options: ["L'extrême droite", "Le centre-gauche", "L'extrême gauche", "Le conservatisme traditionnel"],
+                correct: 1
             },
             {
-                question: "Qu'est-ce que la mondialisation ?",
-                options: [
-                    "Le rejet des échanges internationaux",
-                    "L'intégration économique et culturelle mondiale",
-                    "Le protectionnisme économique",
-                    "L'isolationnisme politique"
-                ],
-                correct: 1,
-                explanation: "La mondialisation est le processus d'intégration des marchés et sociétés à l'échelle mondiale."
+                question: "Quel président américain a mis en place le New Deal ?",
+                options: ["Donald Trump", "Ronald Reagan", "Franklin D. Roosevelt", "George W. Bush"],
+                correct: 2
             },
             {
-                question: "Quel mouvement politique utilise le slogan 'America First' ?",
-                options: ["Le progressisme", "Le nationalisme", "Le socialisme", "Le mondialisme"],
-                correct: 1,
-                explanation: "'America First' est un slogan nationaliste privilégiant les intérêts nationaux."
+                question: "Le libertarianisme prône :",
+                options: ["L'intervention maximale de l'État", "La liberté individuelle maximale", "Le socialisme", "La planification centralisée"],
+                correct: 1
+            },
+            {
+                question: "Rand Paul est associé à quelle idéologie politique ?",
+                options: ["Socialisme", "Libertarianisme", "Communisme", "Fascisme"],
+                correct: 1
+            },
+            {
+                question: "Le libéralisme économique favorise :",
+                options: ["La planification étatique", "Le libre marché", "La nationalisation", "L'abolition de la propriété privée"],
+                correct: 1
+            },
+            {
+                question: "Les politiques économiques de Ronald Reagan sont un exemple de :",
+                options: ["Socialisme", "Communisme", "Libéralisme", "Anarchisme"],
+                correct: 2
+            },
+            {
+                question: "Le conservatisme privilégie :",
+                options: ["Les changements radicaux", "La révolution", "La tradition et l'ordre établi", "L'abolition des institutions"],
+                correct: 2
+            },
+            {
+                question: "Alexandria Ocasio-Cortez est associée à quel mouvement ?",
+                options: ["Conservatisme", "Progressisme", "Libertarianisme", "Fascisme"],
+                correct: 1
+            },
+            {
+                question: "Le Green New Deal est une proposition :",
+                options: ["Conservatrice", "Libertarienne", "Progressiste", "Fasciste"],
+                correct: 2
+            },
+            {
+                question: "L'extrémisme politique est caractérisé par :",
+                options: ["La modération", "Des idées radicales et intransigeantes", "Le centrisme", "La recherche du consensus"],
+                correct: 1
+            },
+            {
+                question: "Bernie Sanders est associé à quelle idéologie aux États-Unis ?",
+                options: ["Conservatisme", "Libertarianisme", "Socialisme", "Fascisme"],
+                correct: 2
+            },
+            {
+                question: "Les gouvernements scandinaves sont souvent cités comme exemples de :",
+                options: ["Libertarianisme", "Conservatisme extrême", "Social-démocratie", "Anarchisme"],
+                correct: 2
+            },
+            {
+                question: "Les politiques de droite favorisent généralement :",
+                options: ["L'augmentation des impôts", "La baisse d'impôts", "La nationalisation", "L'abolition du marché"],
+                correct: 1
+            },
+            {
+                question: "Les politiques d'austérité en Europe sont associées à :",
+                options: ["L'extrême gauche", "Les politiques de droite", "Le communisme", "L'anarchisme"],
+                correct: 1
+            },
+            {
+                question: "Le Parti républicain américain défend généralement :",
+                options: ["Le socialisme", "Le libre marché et les valeurs traditionnelles", "Le communisme", "L'anarchisme"],
+                correct: 1
+            },
+            {
+                question: "Qui a créé le NHS (système de santé public) au Royaume-Uni ?",
+                options: ["Margaret Thatcher", "Boris Johnson", "Clement Attlee", "Winston Churchill"],
+                correct: 2
+            },
+            {
+                question: "Le thatchérisme est associé à quelle idéologie économique ?",
+                options: ["Socialisme", "Communisme", "Libéralisme économique", "Planification centralisée"],
+                correct: 2
+            },
+            {
+                question: "Le slogan 'Take Back Control' est associé à :",
+                options: ["La mondialisation", "Le Brexit", "L'Union européenne", "Le libre-échange"],
+                correct: 1
+            },
+            {
+                question: "Tony Blair était le leader de quel parti politique ?",
+                options: ["Conservateurs", "Labour", "UKIP", "Liberal Democrats"],
+                correct: 1
+            },
+            {
+                question: "Le Mouvement 5 Étoiles en Italie est un exemple de :",
+                options: ["Conservatisme traditionnel", "Populisme", "Monarchisme", "Théocratie"],
+                correct: 1
+            },
+            {
+                question: "Joe Biden appartient à quel parti politique américain ?",
+                options: ["Républicain", "Démocrate", "Libertarien", "Vert"],
+                correct: 1
+            },
+            {
+                question: "L'OTAN est un exemple de :",
+                options: ["Nationalisme", "Institution internationale", "Souverainisme", "Isolationnisme"],
+                correct: 1
+            },
+            {
+                question: "Les réformes fiscales de Trump sont un exemple de :",
+                options: ["Politiques de gauche", "Socialisme", "Politiques de droite", "Communisme"],
+                correct: 2
+            },
+            {
+                question: "Le progressisme prône principalement :",
+                options: ["Le retour aux traditions", "Les réformes sociales avancées", "Le statu quo", "L'abolition du gouvernement"],
+                correct: 1
+            },
+            {
+                question: "Vrai ou Faux : Le souverainisme accepte volontiers les contraintes supranationales.",
+                options: ["Vrai", "Faux"],
+                correct: 1
+            },
+            {
+                question: "Vrai ou Faux : Les Travaillistes britanniques sont historiquement liés au mouvement ouvrier.",
+                options: ["Vrai", "Faux"],
+                correct: 0
+            },
+            {
+                question: "Vrai ou Faux : Le libertarianisme prône une intervention étatique maximale.",
+                options: ["Vrai", "Faux"],
+                correct: 1
+            },
+            {
+                question: "Vrai ou Faux : Donald Trump est associé au mouvement 'America First'.",
+                options: ["Vrai", "Faux"],
+                correct: 0
+            },
+            {
+                question: "Vrai ou Faux : Le conservatisme favorise les changements rapides de société.",
+                options: ["Vrai", "Faux"],
+                correct: 1
+            },
+            {
+                question: "Vrai ou Faux : Le populisme se présente comme défendant les élites contre le peuple.",
+                options: ["Vrai", "Faux"],
+                correct: 1
+            },
+            {
+                question: "Vrai ou Faux : La mondialisation ne concerne que les aspects économiques.",
+                options: ["Vrai", "Faux"],
+                correct: 1
+            },
+            {
+                question: "Vrai ou Faux : Barack Obama était membre du Parti républicain.",
+                options: ["Vrai", "Faux"],
+                correct: 1
+            },
+            {
+                question: "Vrai ou Faux : Le socialisme vise à réduire les inégalités sociales.",
+                options: ["Vrai", "Faux"],
+                correct: 0
+            },
+            {
+                question: "Vrai ou Faux : Le NHS britannique a été créé par le parti Labour.",
+                options: ["Vrai", "Faux"],
+                correct: 0
+            },
+            {
+                question: "Quelle idéologie politique exalte la nation au-dessus des engagements internationaux ?",
+                options: ["Internationalisme", "Nationalisme", "Cosmopolitisme", "Fédéralisme"],
+                correct: 1
+            },
+            {
+                question: "Les accords de libre-échange sont principalement associés à :",
+                options: ["Le protectionnisme", "Le souverainisme", "La mondialisation", "L'isolationnisme"],
+                correct: 2
+            },
+            {
+                question: "Quel parti politique américain est historiquement associé aux droits civiques ?",
+                options: ["Parti républicain moderne", "Parti démocrate", "Parti libertarien", "Parti vert"],
+                correct: 1
+            },
+            {
+                question: "La philosophie politique qui favorise une évolution prudente de la société est :",
+                options: ["Le radicalisme", "Le révolutionnisme", "Le conservatisme", "L'anarchisme"],
+                correct: 2
             }
         ];
 
         let currentQuestion = 0;
         let score = 0;
-        let answeredQuestions = 0;
+        let userAnswers = [];
 
         function initQuiz() {
-            showQuestion();
+            renderQuestion();
         }
 
-        function showQuestion() {
+        function renderQuestion() {
             const quizContent = document.getElementById('quizContent');
-            const q = questions[currentQuestion];
+            const question = questions[currentQuestion];
             
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(${index})">
+                        ${option}
+                    </div>
+                `;
+            });
+
             quizContent.innerHTML = `
-                <div class="question-container active">
-                    <div class="question-number">Question ${currentQuestion + 1} sur ${questions.length}</div>
-                    <div class="question-text">${q.question}</div>
-                    <div class="options" id="options">
-                        ${q.options.map((option, index) => `
-                            <div class="option" onclick="selectAnswer(${index})" data-index="${index}">
-                                ${option}
-                            </div>
-                        `).join('')}
+                <div class="question active">
+                    <div class="question-number">Question ${currentQuestion + 1}/50</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">
+                        ${optionsHTML}
                     </div>
                     <div class="feedback" id="feedback"></div>
-                    <div class="btn-container">
-                        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>
-                            ${currentQuestion < questions.length - 1 ? 'Question suivante ➜' : 'Voir les résultats 🎯'}
-                        </button>
+                    <div class="controls">
+                        <button class="btn" onclick="previousQuestion()" ${currentQuestion === 0 ? 'disabled' : ''}>Précédent</button>
+                        <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Suivant</button>
                     </div>
                 </div>
             `;
-            
-            updateProgressBar();
+
+            updateProgress();
         }
 
-        function selectAnswer(index) {
+        function selectOption(index) {
             const options = document.querySelectorAll('.option');
             const feedback = document.getElementById('feedback');
             const nextBtn = document.getElementById('nextBtn');
-            const q = questions[currentQuestion];
             
-            // Disable all options
             options.forEach(opt => {
-                opt.style.pointerEvents = 'none';
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.onclick = null;
             });
-            
-            // Remove previous selections
-            options.forEach(opt => opt.classList.remove('selected'));
-            
-            // Mark selected
-            options[index].classList.add('selected');
-            
-            // Check answer
-            if (index === q.correct) {
+
+            const question = questions[currentQuestion];
+            userAnswers[currentQuestion] = index;
+
+            if (index === question.correct) {
                 options[index].classList.add('correct');
-                feedback.className = 'feedback correct show';
-                feedback.innerHTML = `✅ <strong>Correct !</strong> ${q.explanation}`;
-                score++;
+                feedback.innerHTML = '✅ Correct ! Excellente réponse !';
+                feedback.className = 'feedback show correct';
+                if (!userAnswers[currentQuestion] || userAnswers[currentQuestion] === undefined) {
+                    score++;
+                }
             } else {
                 options[index].classList.add('incorrect');
-                options[q.correct].classList.add('correct');
-                feedback.className = 'feedback incorrect show';
-                feedback.innerHTML = `❌ <strong>Incorrect.</strong> ${q.explanation}`;
+                options[question.correct].classList.add('correct');
+                feedback.innerHTML = `❌ Incorrect. La bonne réponse était : ${question.options[question.correct]}`;
+                feedback.className = 'feedback show incorrect';
             }
-            
-            answeredQuestions++;
+
             nextBtn.disabled = false;
         }
 
         function nextQuestion() {
-            currentQuestion++;
-            
-            if (currentQuestion < questions.length) {
-                showQuestion();
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
             } else {
                 showResults();
             }
         }
 
-        function updateProgressBar() {
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function updateProgress() {
             const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressFill').style.width = progress + '%';
         }
 
         function showResults() {
-            const percentage = Math.round((score / questions.length) * 100);
-            let message = '';
+            document.getElementById('quizContent').style.display = 'none';
+            const results = document.getElementById('results');
+            results.classList.add('active');
             
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            document.getElementById('finalScore').textContent = `${score}/50`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = questions.length - score;
+            document.getElementById('percentScore').textContent = percentage + '%';
+            
+            let message = '';
             if (percentage >= 90) {
-                message = "🌟 Excellent ! Vous maîtrisez parfaitement le sujet !";
+                message = '🏆 Excellent ! Vous êtes un expert des courants politiques !';
             } else if (percentage >= 75) {
-                message = "👏 Très bien ! Vous avez de solides connaissances !";
+                message = '🎯 Très bien ! Vous avez de solides connaissances !';
             } else if (percentage >= 60) {
-                message = "👍 Bien ! Continuez à réviser pour progresser !";
-            } else if (percentage >= 50) {
-                message = "📚 Pas mal, mais il reste du travail !";
+                message = '👍 Bien ! Vous avez de bonnes bases !';
+            } else if (percentage >= 40) {
+                message = '📚 Pas mal ! Continuez à apprendre !';
             } else {
-                message = "💪 Il faut revoir le cours, courage !";
+                message = '💪 Courage ! Il est temps de réviser les courants politiques !';
             }
             
-            document.getElementById('quizContent').style.display = 'none';
-            document.getElementById('results').classList.add('active');
-            document.getElementById('scoreDisplay').textContent = percentage + '%';
-            document.getElementById('scoreMessage').textContent = message;
-            document.getElementById('scoreDetails').innerHTML = `
-                <p><strong>Score :</strong> ${score} / ${questions.length}</p>
-                <p><strong>Bonnes réponses :</strong> ${score}</p>
-                <p><strong>Mauvaises réponses :</strong> ${questions.length - score}</p>
-            `;
+            document.getElementById('finalMessage').textContent = message;
         }
 
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
-            answeredQuestions = 0;
+            userAnswers = [];
             document.getElementById('results').classList.remove('active');
             document.getElementById('quizContent').style.display = 'block';
             initQuiz();
         }
 
-        // Start the quiz
+        // Démarrer le quiz
         initQuiz();
     </script>
 </body>
